@@ -1,0 +1,3 @@
+[submodule "openapi-zod-ts-schema"]
+	path = openapi-zod-ts-schema
+	url = git@github.com:sebdybowski/openapi-zod-ts-schema.git
