@@ -13,13 +13,13 @@ declare interface paths {
         };
         get?: never;
         /**
-         * Update an existing pet
-         * @description Update an existing pet by Id
+         * Update an existing pet.
+         * @description Update an existing pet by Id.
          */
         put: operations["updatePet"];
         /**
-         * Add a new pet to the store
-         * @description Add a new pet to the store
+         * Add a new pet to the store.
+         * @description Add a new pet to the store.
          */
         post: operations["addPet"];
         delete?: never;
@@ -36,8 +36,8 @@ declare interface paths {
             cookie?: never;
         };
         /**
-         * Finds Pets by status
-         * @description Multiple status values can be provided with comma separated strings
+         * Finds Pets by status.
+         * @description Multiple status values can be provided with comma separated strings.
          */
         get: operations["findPetsByStatus"];
         put?: never;
@@ -56,7 +56,7 @@ declare interface paths {
             cookie?: never;
         };
         /**
-         * Finds Pets by tags
+         * Finds Pets by tags.
          * @description Multiple tags can be provided with comma separated strings. Use tag1, tag2, tag3 for testing.
          */
         get: operations["findPetsByTags"];
@@ -76,16 +76,19 @@ declare interface paths {
             cookie?: never;
         };
         /**
-         * Find pet by ID
-         * @description Returns a single pet
+         * Find pet by ID.
+         * @description Returns a single pet.
          */
         get: operations["getPetById"];
         put?: never;
-        /** Updates a pet in the store with form data */
+        /**
+         * Updates a pet in the store with form data.
+         * @description Updates a pet resource based on the form data.
+         */
         post: operations["updatePetWithForm"];
         /**
-         * Deletes a pet
-         * @description delete a pet
+         * Deletes a pet.
+         * @description Delete a pet.
          */
         delete: operations["deletePet"];
         options?: never;
@@ -102,7 +105,10 @@ declare interface paths {
         };
         get?: never;
         put?: never;
-        /** uploads an image */
+        /**
+         * Uploads an image.
+         * @description Upload image of the pet.
+         */
         post: operations["uploadFile"];
         delete?: never;
         options?: never;
@@ -118,8 +124,8 @@ declare interface paths {
             cookie?: never;
         };
         /**
-         * Returns pet inventories by status
-         * @description Returns a map of status codes to quantities
+         * Returns pet inventories by status.
+         * @description Returns a map of status codes to quantities.
          */
         get: operations["getInventory"];
         put?: never;
@@ -140,8 +146,8 @@ declare interface paths {
         get?: never;
         put?: never;
         /**
-         * Place an order for a pet
-         * @description Place a new order in the store
+         * Place an order for a pet.
+         * @description Place a new order in the store.
          */
         post: operations["placeOrder"];
         delete?: never;
@@ -158,15 +164,15 @@ declare interface paths {
             cookie?: never;
         };
         /**
-         * Find purchase order by ID
+         * Find purchase order by ID.
          * @description For valid response try integer IDs with value <= 5 or > 10. Other values will generate exceptions.
          */
         get: operations["getOrderById"];
         put?: never;
         post?: never;
         /**
-         * Delete purchase order by ID
-         * @description For valid response try integer IDs with value < 1000. Anything above 1000 or nonintegers will generate API errors
+         * Delete purchase order by identifier.
+         * @description For valid response try integer IDs with value < 1000. Anything above 1000 or non-integers will generate API errors.
          */
         delete: operations["deleteOrder"];
         options?: never;
@@ -184,7 +190,7 @@ declare interface paths {
         get?: never;
         put?: never;
         /**
-         * Create user
+         * Create user.
          * @description This can only be done by the logged in user.
          */
         post: operations["createUser"];
@@ -204,8 +210,8 @@ declare interface paths {
         get?: never;
         put?: never;
         /**
-         * Creates list of users with given input array
-         * @description Creates list of users with given input array
+         * Creates list of users with given input array.
+         * @description Creates list of users with given input array.
          */
         post: operations["createUsersWithListInput"];
         delete?: never;
@@ -221,7 +227,10 @@ declare interface paths {
             path?: never;
             cookie?: never;
         };
-        /** Logs user into the system */
+        /**
+         * Logs user into the system.
+         * @description Log into the system.
+         */
         get: operations["loginUser"];
         put?: never;
         post?: never;
@@ -238,7 +247,10 @@ declare interface paths {
             path?: never;
             cookie?: never;
         };
-        /** Logs out current logged in user session */
+        /**
+         * Logs out current logged in user session.
+         * @description Log user out of the system.
+         */
         get: operations["logoutUser"];
         put?: never;
         post?: never;
@@ -255,16 +267,19 @@ declare interface paths {
             path?: never;
             cookie?: never;
         };
-        /** Get user by user name */
+        /**
+         * Get user by user name.
+         * @description Get user detail based on username.
+         */
         get: operations["getUserByName"];
         /**
-         * Update user
+         * Update user resource.
          * @description This can only be done by the logged in user.
          */
         put: operations["updateUser"];
         post?: never;
         /**
-         * Delete user
+         * Delete user resource.
          * @description This can only be done by the logged in user.
          */
         delete: operations["deleteUser"];
@@ -302,26 +317,6 @@ declare interface components {
              */
             status?: "placed" | "approved" | "delivered";
             complete?: boolean;
-        };
-        Customer: {
-            /**
-             * Format: int64
-             * @example 100000
-             */
-            id?: number;
-            /** @example fehguy */
-            username?: string;
-            address?: components["schemas"]["Address"][];
-        };
-        Address: {
-            /** @example 437 Lytton */
-            street?: string;
-            /** @example Palo Alto */
-            city?: string;
-            /** @example CA */
-            state?: string;
-            /** @example 94301 */
-            zip?: string;
         };
         Category: {
             /**
@@ -407,8 +402,6 @@ declare interface components {
     pathItems: never;
 }
 declare type SchemaOrder = components['schemas']['Order'];
-declare type SchemaCustomer = components['schemas']['Customer'];
-declare type SchemaAddress = components['schemas']['Address'];
 declare type SchemaCategory = components['schemas']['Category'];
 declare type SchemaUser = components['schemas']['User'];
 declare type SchemaTag = components['schemas']['Tag'];
@@ -459,7 +452,14 @@ declare interface operations {
                 content?: never;
             };
             /** @description Validation exception */
-            405: {
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Unexpected error */
+            default: {
                 headers: {
                     [name: string]: unknown;
                 };
@@ -494,7 +494,21 @@ declare interface operations {
                 };
             };
             /** @description Invalid input */
-            405: {
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Validation exception */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Unexpected error */
+            default: {
                 headers: {
                     [name: string]: unknown;
                 };
@@ -531,6 +545,13 @@ declare interface operations {
                 };
                 content?: never;
             };
+            /** @description Unexpected error */
+            default: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
         };
     };
     findPetsByTags: {
@@ -557,6 +578,13 @@ declare interface operations {
             };
             /** @description Invalid tag value */
             400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Unexpected error */
+            default: {
                 headers: {
                     [name: string]: unknown;
                 };
@@ -600,6 +628,13 @@ declare interface operations {
                 };
                 content?: never;
             };
+            /** @description Unexpected error */
+            default: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
         };
     };
     updatePetWithForm: {
@@ -619,8 +654,25 @@ declare interface operations {
         };
         requestBody?: never;
         responses: {
+            /** @description successful operation */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Pet"];
+                    "application/xml": components["schemas"]["Pet"];
+                };
+            };
             /** @description Invalid input */
-            405: {
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Unexpected error */
+            default: {
                 headers: {
                     [name: string]: unknown;
                 };
@@ -642,8 +694,22 @@ declare interface operations {
         };
         requestBody?: never;
         responses: {
+            /** @description Pet deleted */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
             /** @description Invalid pet value */
             400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Unexpected error */
+            default: {
                 headers: {
                     [name: string]: unknown;
                 };
@@ -679,6 +745,27 @@ declare interface operations {
                     "application/json": components["schemas"]["ApiResponse"];
                 };
             };
+            /** @description No file uploaded */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Pet not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Unexpected error */
+            default: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
         };
     };
     getInventory: {
@@ -700,6 +787,13 @@ declare interface operations {
                         [key: string]: number;
                     };
                 };
+            };
+            /** @description Unexpected error */
+            default: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
             };
         };
     };
@@ -728,7 +822,21 @@ declare interface operations {
                 };
             };
             /** @description Invalid input */
-            405: {
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Validation exception */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Unexpected error */
+            default: {
                 headers: {
                     [name: string]: unknown;
                 };
@@ -772,6 +880,13 @@ declare interface operations {
                 };
                 content?: never;
             };
+            /** @description Unexpected error */
+            default: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
         };
     };
     deleteOrder: {
@@ -786,6 +901,13 @@ declare interface operations {
         };
         requestBody?: never;
         responses: {
+            /** @description order deleted */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
             /** @description Invalid ID supplied */
             400: {
                 headers: {
@@ -795,6 +917,13 @@ declare interface operations {
             };
             /** @description Order not found */
             404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Unexpected error */
+            default: {
                 headers: {
                     [name: string]: unknown;
                 };
@@ -819,7 +948,7 @@ declare interface operations {
         };
         responses: {
             /** @description successful operation */
-            default: {
+            200: {
                 headers: {
                     [name: string]: unknown;
                 };
@@ -827,6 +956,13 @@ declare interface operations {
                     "application/json": components["schemas"]["User"];
                     "application/xml": components["schemas"]["User"];
                 };
+            };
+            /** @description Unexpected error */
+            default: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
             };
         };
     };
@@ -853,7 +989,7 @@ declare interface operations {
                     "application/xml": components["schemas"]["User"];
                 };
             };
-            /** @description successful operation */
+            /** @description Unexpected error */
             default: {
                 headers: {
                     [name: string]: unknown;
@@ -897,6 +1033,13 @@ declare interface operations {
                 };
                 content?: never;
             };
+            /** @description Unexpected error */
+            default: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
         };
     };
     logoutUser: {
@@ -909,6 +1052,13 @@ declare interface operations {
         requestBody?: never;
         responses: {
             /** @description successful operation */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Unexpected error */
             default: {
                 headers: {
                     [name: string]: unknown;
@@ -922,7 +1072,7 @@ declare interface operations {
             query?: never;
             header?: never;
             path: {
-                /** @description The name that needs to be fetched. Use user1 for testing.  */
+                /** @description The name that needs to be fetched. Use user1 for testing */
                 username: string;
             };
             cookie?: never;
@@ -953,6 +1103,13 @@ declare interface operations {
                 };
                 content?: never;
             };
+            /** @description Unexpected error */
+            default: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
         };
     };
     updateUser: {
@@ -975,6 +1132,27 @@ declare interface operations {
         };
         responses: {
             /** @description successful operation */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description bad request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description user not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Unexpected error */
             default: {
                 headers: {
                     [name: string]: unknown;
@@ -995,6 +1173,13 @@ declare interface operations {
         };
         requestBody?: never;
         responses: {
+            /** @description User deleted */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
             /** @description Invalid username supplied */
             400: {
                 headers: {
@@ -1004,6 +1189,13 @@ declare interface operations {
             };
             /** @description User not found */
             404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Unexpected error */
+            default: {
                 headers: {
                     [name: string]: unknown;
                 };

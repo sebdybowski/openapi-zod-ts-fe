@@ -9,7 +9,9 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "gen:types": "openapi-typescript ./openapi-zod-ts-schema/api-schema.yaml -o ./src/types/api-schema.d.ts --root-types && node ./scripts/exportToDeclare.js ./src/types/api-schema.d.ts",
-    "gen:zod": "typed-openapi ./openapi-zod-ts-schema/api-schema.yaml -o src/types/api-schema.zod.ts -r zod"
+    "gen:zod": "typed-openapi ./openapi-zod-ts-schema/api-schema.yaml -o src/types/api-schema.zod.ts -r zod",
+    "gen:all": "npm run gen:types && npm run gen:zod",
+    "update:submodules": "git submodule update --recursive --remote"
   },
   "dependencies": {
     "react": "^19.0.0",
