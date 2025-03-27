@@ -9,7 +9,7 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "gen:types": "openapi-typescript ./openapi-zod-ts-schema/api-schema.yaml -o ./src/types/api-schema.d.ts --root-types && node ./scripts/exportToDeclare.js ./src/types/api-schema.d.ts",
-    "gen:zod": "typed-openapi ./openapi-zod-ts-schema/api-schema.yaml -o src/types/api-schema.zod.d.ts -r zod"
+    "gen:zod": "typed-openapi ./openapi-zod-ts-schema/api-schema.yaml -o src/types/api-schema.zod.ts -r zod"
   },
   "dependencies": {
     "react": "^19.0.0",
@@ -17,6 +17,7 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.21.0",
+    "@picocss/pico": "^2.1.1",
     "@types/react": "^19.0.10",
     "@types/react-dom": "^19.0.4",
     "@vitejs/plugin-react": "^4.3.4",
@@ -25,6 +26,7 @@
     "eslint-plugin-react-refresh": "^0.4.19",
     "globals": "^15.15.0",
     "openapi-typescript": "^7.6.1",
+    "react-hook-form": "^7.54.2",
     "typed-openapi": "^0.10.1",
     "typescript": "~5.7.2",
     "typescript-eslint": "^8.24.1",
