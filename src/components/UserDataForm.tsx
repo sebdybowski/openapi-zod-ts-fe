@@ -1,13 +1,15 @@
-import React, { useState } from "react";
+import React, {useState} from "react";
 import type {User} from "../types/api-schema.zod.ts";
-import {User as UserSchema} from "../types/api-schema.zod.ts";
+import {User as userSchema} from "../types/api-schema.zod.ts";
 
-const UserDataForm: React.FC<{ onSubmit: (data: User) => void }> = ({ onSubmit }) => {
+const requiredUserSchema = userSchema.required();
+
+const UserDataForm: React.FC<{ onSubmit: (data: User) => void }> = ({onSubmit}) => {
     const [formValues, setFormValues] = useState<User>({});
     const [formErrors, setFormErrors] = useState<Partial<User>>({});
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const { name, value } = e.target;
+        const {name, value} = e.target;
         setFormValues((prevValues) => ({
             ...prevValues,
             [name]: value,
@@ -16,18 +18,25 @@ const UserDataForm: React.FC<{ onSubmit: (data: User) => void }> = ({ onSubmit }
 
     const handleFormSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        const result = UserSchema.safeParse(formValues);
+        const result = requiredUserSchema.safeParse(formValues);
 
-        console.log(result);
+        console.log(result.error?.issues);
 
         if (!result.success) {
             const errors: Partial<User> = {};
+            result.error?.issues.forEach((issue) => {
+                const key: string | number = issue.path[0];
+                // @ts-ignore
+                errors[key] = issue.message;
+            })
             setFormErrors(errors);
             return;
         }
 
         onSubmit(result.data);
     };
+
+    console.log({formErrors, formValues});
 
     return (
         <form onSubmit={handleFormSubmit}>
